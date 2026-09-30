@@ -18,8 +18,9 @@ function App() {
     setCurrentClaimPayload(payload);
 
     try {
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
       // 1. Call existing Prediction API (preserved functionality)
-      const predResponse = await fetch('http://localhost:8000/api/predict/manual', {
+      const predResponse = await fetch(`${API_BASE_URL}/api/predict/manual`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -31,7 +32,7 @@ function App() {
       }
 
       // 2. Call new RAG + NVIDIA LLM AI Investigation API
-      const aiResponse = await fetch('http://localhost:8000/api/ai/investigate', {
+      const aiResponse = await fetch(`${API_BASE_URL}/api/ai/investigate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ claim: payload })
